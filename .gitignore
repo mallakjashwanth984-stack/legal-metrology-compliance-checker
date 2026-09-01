@@ -1,0 +1,46 @@
+# Backend
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/*.so
+backend/.Python
+backend/build/
+backend/develop-eggs/
+backend/dist/
+backend/downloads/
+backend/eggs/
+backend/.eggs/
+backend/lib/
+backend/lib64/
+backend/parts/
+backend/sdist/
+backend/var/
+backend/wheels/
+backend/.env
+backend/.venv
+backend/venv/
+backend/ENV/
+backend/instance/
+backend/.webassets-cache
+backend/.pytest_cache/
+backend/htmlcov/
+
+# Frontend
+frontend/node_modules/
+frontend/.next
+frontend/out
+frontend/.env.local
+frontend/.env.*.local
+frontend/.vercel
+frontend/dist/
+frontend/build/
+frontend/.DS_Store
+frontend/*.pem
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

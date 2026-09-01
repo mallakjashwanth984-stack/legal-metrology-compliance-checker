@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: metrology_db
+    environment:
+      POSTGRES_USER: metrology_user
+      POSTGRES_PASSWORD: metrology_pass
+      POSTGRES_DB: metrology_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U metrology_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: metrology_backend
+    environment:
+      FLASK_ENV: production
+      DATABASE_URL: postgresql://metrology_user:metrology_pass@postgres:5432/metrology_db
+      JWT_SECRET_KEY: your_jwt_secret_key_here
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - ./uploads:/app/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: metrology_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api
+
+volumes:
+  postgres_data:
